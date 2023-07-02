@@ -1,11 +1,13 @@
 <script setup>
 const city = ref("");
-const router = useRouter();
+const cityError = ref(false);
 
 const handleSearch = () => {
-  router.push(`/city/${city.value}/car`)
-}
-
+  if (!city.value) {
+    return cityError.value = true;
+  }
+  navigateTo(`/city/${city.value}/car`);
+};
 </script>
 
 <template>
@@ -15,6 +17,7 @@ const handleSearch = () => {
     <input
       type="text"
       class="py-3 px-5 w-full text-2xl rounded-full focus:outline-none"
+      :class="cityError ? 'border-red-500 border' : ''"
       placeholder="Search by city..."
       v-model="city"
     />
